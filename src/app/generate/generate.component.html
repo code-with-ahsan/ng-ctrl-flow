@@ -1,0 +1,60 @@
+<form class="flex items-center h-24 w-full gap-6" (submit)="formSubmit($event)">
+  <label
+    for="promptText"
+    class="relative flex-1 block overflow-hidden border-b border-gray-200 bg-transparent pt-3 focus-within:border-blue-600"
+  >
+    <input
+      id="promptText"
+      name="promptText"
+      type="text"
+      [(ngModel)]="promptText"
+      placeholder="Type your prompt here"
+      class="peer pt-2 h-8 w-full border-none bg-transparent p-0 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
+    >
+
+    <span
+      class="absolute start-0 top-2 -translate-y-1/2 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs"
+    >
+      Prompt
+    </span>
+  </label>
+
+  <button
+    type="submit"
+    class="inline-block rounded-full border border-indigo-600 bg-indigo-600 p-3 text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500"
+  >
+    <span class="sr-only"> Download </span>
+
+    <svg
+      class="h-2 w-2 rtl:rotate-180"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M14 5l7 7m0 0l-7 7m7-7H3"
+      />
+    </svg>
+  </button>
+
+</form>
+
+@if (isLoading) {
+<section class="w-full text-center">
+  <app-spinner></app-spinner>
+</section>
+} @else if (error) {
+<div class="text-red-700">Error: {{ error }}</div>
+} @else {
+<section class="grid grid-cols-2 gap-4 w-full place-content-center">
+  @for (image of images; track image) {
+  <img [src]="image" alt="Generated image" />
+  } @empty {
+  <li>No images...</li>
+  }
+</section>
+}
